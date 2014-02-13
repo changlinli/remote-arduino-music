@@ -21,3 +21,5 @@ switchPin = Ard.digital 13
 resetPin :: Ard.Pin
 resetPin = Ard.digital 12
 
+stationReset :: Int
+stationReset = 0
