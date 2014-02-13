@@ -1,0 +1,7 @@
+*.hi
+*.o
+*.swp
+.hsenv
+dist
+Config.hs
+Setup.hs
