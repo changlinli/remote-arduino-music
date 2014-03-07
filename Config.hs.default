@@ -3,7 +3,8 @@ module Config
         arduinoDevicePath,
         pianobarFIFO,
         switchPin,
-        resetPin
+        resetPin,
+        stationReset
 ) where
 
 import System.Hardware.Arduino as Ard
