@@ -7,7 +7,7 @@ playPauseToggle :: IO ()
 playPauseToggle = writeFile Config.pianobarFIFO "p"
 
 resetStation :: IO ()
-resetStation = writeFile Config.pianobarFIFO ("s" ++ show Config.stationNumber ++ "\n")
+resetStation = writeFile Config.pianobarFIFO ("s" ++ show Config.stationReset ++ "\n")
 
 senseInputPlayPauseToggle :: Bool -> Ard.Arduino ()
 senseInputPlayPauseToggle True = liftIO playPauseToggle
