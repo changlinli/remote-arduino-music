@@ -1,4 +1,4 @@
 all:
 	cabal configure
 	cabal build
-	cabal install
+	cabal install remote_arduino_music.cabal
