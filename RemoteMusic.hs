@@ -19,11 +19,11 @@ senseInputResetStation True = liftIO resetStation
 senseInputResetStation False = return ()
 
 senseInputPlayPauseCmus :: Bool -> Ard.Arduino ()
-senseInputPlayPauseCmus True = liftIO (system "cmus-remote -u") >>= (\x -> Ard.delay 500)
+senseInputPlayPauseCmus True = liftIO (system "cmus-remote -u" >>= (\x -> return ()))
 senseInputPlayPauseCmus False = return ()
 
 senseInputSkipSong :: Bool -> Ard.Arduino ()
-senseInputSkipSong True = liftIO (system "cmus-remote -n") >>= (\x -> Ard.delay 500)
+senseInputSkipSong True = liftIO (system "cmus-remote -n" >>= (\x -> return ()))
 senseInputSkipSong False = return ()
 
 playPandora :: IO ()
@@ -42,9 +42,11 @@ playCmus = withArduino False Config.arduinoDevicePath $ do
         setPinMode Config.switchPin INPUT
         setPinMode Config.resetPin INPUT
         forever $ do
-                listOfPins <- waitAny [Config.switchPin, Config.resetPin]
-                actions <- return (zipWith ($) [senseInputPlayPauseCmus, senseInputSkipSong] listOfPins)
-                foldl (>>) (return ()) actions
+                x <- digitalRead Config.switchPin
+                y <- digitalRead Config.resetPin
+                senseInputPlayPauseCmus x
+                senseInputSkipSong y
+                Ard.delay 500
 
 main :: IO ()
 main = playCmus
